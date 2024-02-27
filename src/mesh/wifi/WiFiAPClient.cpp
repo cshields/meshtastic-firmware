@@ -54,16 +54,18 @@ static void onNetworkConnected()
 
 #ifdef ARCH_ESP32
         // start mdns
-        if (!MDNS.begin("Meshtastic")) {
+        const char* devname=getDeviceName();
+        strcpy(ourHost, devname);
+        if (!MDNS.begin(ourHost)) {
             LOG_ERROR("Error setting up MDNS responder!\n");
         } else {
             LOG_INFO("mDNS responder started\n");
-            LOG_INFO("mDNS Host: Meshtastic.local\n");
+            LOG_INFO(("mDNS Host: " + std::string(ourHost) + ".local\n").c_str());
             MDNS.addService("http", "tcp", 80);
             MDNS.addService("https", "tcp", 443);
         }
 #else // ESP32 handles this in WiFiEvent
-        LOG_INFO("Obtained IP address: %s\n", WiFi.localIP().toString().c_str());
+        LOG_INFO("Obtained IP address: %s\n", WiFi.localIP().toString()).c_str();
 #endif
 
 #ifndef DISABLE_NTP
