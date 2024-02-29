@@ -97,9 +97,12 @@ static void taskCreateCert(void *parameter)
 
         LOG_INFO("Creating the certificate. This may take a while. Please wait...\n");
         yield();
+        std::string commonName = "CN=";
+        commonName += getDeviceName();
+        commonName += ".local,O=Meshtastic,C=US";
         cert = new SSLCert();
         yield();
-        int createCertResult = createSelfSignedCert(*cert, KEYSIZE_2048, "CN=meshtastic.local,O=Meshtastic,C=US",
+        int createCertResult = createSelfSignedCert(*cert, KEYSIZE_2048, commonName.c_str(),
                                                     "20190101000000", "20300101000000");
         yield();
 

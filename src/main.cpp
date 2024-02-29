@@ -152,9 +152,9 @@ const char *getDeviceName()
     snprintf(name, sizeof(name), "%02x%02x", dmac[4], dmac[5]);
     // if the shortname exists and is NOT the new default of ab3c, use it for BLE name.
     if ((owner.short_name != NULL) && (strcmp(owner.short_name, name) != 0)) {
-        snprintf(name, sizeof(name), "%s_%02x%02x", owner.short_name, dmac[4], dmac[5]);
+        snprintf(name, sizeof(name), "%s%02x%02x", owner.short_name, dmac[4], dmac[5]);
     } else {
-        snprintf(name, sizeof(name), "Meshtastic_%02x%02x", dmac[4], dmac[5]);
+        snprintf(name, sizeof(name), "meshtastic%02x%02x", dmac[4], dmac[5]);
     }
     return name;
 }
